@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Achievement Share</title>
+    <title>Learning Path Achievement Share</title>
 
     <style>
         body {
@@ -12,7 +12,7 @@
 
         .card {
             background: white;
-            max-width: 700px;
+            max-width: 800px;
             margin: auto;
             padding: 40px;
             text-align: center;
@@ -20,14 +20,16 @@
             box-shadow: 0 2px 12px rgba(0,0,0,.1);
         }
 
-        .button {
-            display: inline-block;
-            background: #0077B5;
-            color: white;
-            padding: 12px 20px;
-            margin: 10px;
-            text-decoration: none;
-            border-radius: 6px;
+        h1 {
+            color: #0078d4;
+        }
+
+        select {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px;
+            margin: 20px 0;
+            font-size: 16px;
         }
 
         button {
@@ -39,6 +41,24 @@
             cursor: pointer;
             margin: 10px;
         }
+
+        .linkedin {
+            display: inline-block;
+            background: #0077B5;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            margin: 10px;
+        }
+
+        #preview {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f8f8f8;
+            border-radius: 8px;
+            text-align: left;
+        }
     </style>
 </head>
 
@@ -46,51 +66,69 @@
 
 <div class="card">
 
-    <h1>🎉 Congratulations!</h1>
+    <h1>🎉 Share Your Achievement</h1>
 
-    <h2 id="curriculum"></h2>
+    <p>Select the Learning Path you completed:</p>
 
-    <p>
-        Thank you for completing your learning journey.
-    </p>
+    <select id="learningPath" onchange="updateMessage()">
+        <option value="">Select a Learning Path</option>
+        <option>Microsoft Copilot Learning Path</option>
+        <option>Power Platform Fundamentals</option>
+        <option>Azure Fundamentals</option>
+        <option>Cyber Security Awareness</option>
+        <option>Data & AI Essentials</option>
+    </select>
+
+    <div id="preview">
+        Select a Learning Path to generate your LinkedIn post.
+    </div>
 
     <button onclick="copyMessage()">
-        Copy LinkedIn Message
+        📋 Copy LinkedIn Message
     </button>
 
-    <a id="linkedinShare"
-   class="button"
-   target="_blank">
-   Share on LinkedIn
-</a>
+    https://www.linkedin.com/feed/"
+       target="_blank">
+       🔗 Open LinkedIn
+    </a>
 
 </div>
 
 <script>
 
-const params = new URLSearchParams(window.location.search);
+let linkedinMessage = "";
 
-const curriculum =
-    params.get("curriculum") ||
-    "Microsoft Copilot Learning Path";
+function updateMessage() {
 
-document.getElementById("curriculum").innerText =
-    curriculum;
+    const learningPath =
+        document.getElementById("learningPath").value;
 
-const linkedinMessage =
-`🎉 I'm pleased to share that I have successfully completed the ${curriculum} learning path.`;
+    if (!learningPath) {
 
-function copyMessage() {
-    navigator.clipboard.writeText(linkedinMessage);
-    alert("Message copied to clipboard!");
+        document.getElementById("preview").innerHTML =
+            "Select a Learning Path to generate your LinkedIn post.";
+
+        return;
+    }
+
+    linkedinMessage =
+        `🎉 I'm pleased to share that I have successfully completed the ${learningPath}. I continue to invest in developing my professional skills and knowledge.`;
+
+    document.getElementById("preview").innerHTML =
+        linkedinMessage;
 }
 
-/* Create LinkedIn share URL */
-const pageUrl = window.location.href;
+function copyMessage() {
 
-document.getElementById("linkedinShare").href =
-    "https://www.linkedin.com/sharing/share-offsite/?url=" +
-    encodeURIComponent(pageUrl);
+    if (!linkedinMessage) {
+        alert("Please select a Learning Path first.");
+        return;
+    }
+
+    navigator.clipboard.writeText(linkedinMessage);
+
+    alert("LinkedIn message copied to clipboard!");
+}
 
 </script>
 
