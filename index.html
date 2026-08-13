@@ -2,24 +2,89 @@
 <html>
 <head>
     <title>Achievement Share</title>
+
+    <style>
+        body {
+            font-family: Segoe UI, Arial, sans-serif;
+            background: #f4f6f8;
+            padding: 40px;
+        }
+
+        .card {
+            background: white;
+            max-width: 700px;
+            margin: auto;
+            padding: 40px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,.1);
+        }
+
+        .button {
+            display: inline-block;
+            background: #0077B5;
+            color: white;
+            padding: 12px 20px;
+            margin: 10px;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        button {
+            background: #107C10;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px;
+        }
+    </style>
 </head>
 
 <body>
+
+<div class="card">
 
     <h1>🎉 Congratulations!</h1>
 
     <h2 id="curriculum"></h2>
 
-    <script>
-        const params = new URLSearchParams(window.location.search);
+    <p>
+        Thank you for completing your learning journey.
+    </p>
 
-        const curriculum =
-            params.get("curriculum") ||
-            "Microsoft Copilot Learning Path";
+    <button onclick="copyMessage()">
+        Copy LinkedIn Message
+    </button>
 
-        document.getElementById("curriculum").innerText =
-            curriculum;
-    </script>
+    <a
+    /www.linkedin.com/feed/
+        Open LinkedIn
+    </a>
+
+</div>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+const curriculum =
+    params.get("curriculum") ||
+    "Microsoft Copilot Learning Path";
+
+document.getElementById("curriculum").innerText =
+    curriculum;
+
+const linkedinMessage =
+`🎉 I'm pleased to share that I have successfully completed the ${curriculum} learning path.`;
+
+function copyMessage() {
+    navigator.clipboard.writeText(linkedinMessage);
+    alert("Message copied to clipboard!");
+}
+
+</script>
 
 </body>
 </html>
