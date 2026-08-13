@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Learning Path Achievement Share</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Your Achievement</title>
 
     <style>
         body {
-            font-family: Segoe UI, Arial, sans-serif;
+            font-family: "Segoe UI", Arial, sans-serif;
             background: #f4f6f8;
             padding: 40px;
+            margin: 0;
         }
 
         .card {
@@ -17,11 +20,15 @@
             padding: 40px;
             text-align: center;
             border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(0,0,0,.1);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
         }
 
         h1 {
             color: #0078d4;
+        }
+
+        p {
+            color: #666;
         }
 
         select {
@@ -30,6 +37,7 @@
             padding: 12px;
             margin: 20px 0;
             font-size: 16px;
+            border-radius: 6px;
         }
 
         button {
@@ -40,6 +48,11 @@
             border-radius: 6px;
             cursor: pointer;
             margin: 10px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #0b5f0b;
         }
 
         .linkedin {
@@ -50,6 +63,11 @@
             border-radius: 6px;
             text-decoration: none;
             margin: 10px;
+            font-size: 16px;
+        }
+
+        .linkedin:hover {
+            background: #005f91;
         }
 
         #preview {
@@ -58,10 +76,10 @@
             background: #f8f8f8;
             border-radius: 8px;
             text-align: left;
+            min-height: 80px;
         }
     </style>
 </head>
-
 <body>
 
 <div class="card">
@@ -72,24 +90,29 @@
 
     <select id="learningPath" onchange="updateMessage()">
         <option value="">Select a Learning Path</option>
-        <option>Microsoft Copilot Learning Path</option>
-        <option>Power Platform Fundamentals</option>
-        <option>Azure Fundamentals</option>
-        <option>Cyber Security Awareness</option>
-        <option>Data & AI Essentials</option>
+        <option value="Microsoft Copilot Learning Path">Microsoft Copilot Learning Path</option>
+        <option value="Power Platform Fundamentals">Power Platform Fundamentals</option>
+        <option value="Azure Fundamentals">Azure Fundamentals</option>
+        <option value="Cyber Security Awareness">Cyber Security Awareness</option>
+        <option value="Data & AI Essentials">Data & AI Essentials</option>
     </select>
 
     <div id="preview">
         Select a Learning Path to generate your LinkedIn post.
     </div>
 
+    <br>
+
     <button onclick="copyMessage()">
         📋 Copy LinkedIn Message
     </button>
 
-    <a href="https://www.linkedin.com/feed/"
- LinkedIn
-</a>
+    https://www.linkedin.com/feed/"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="linkedin">
+       🔗 Open LinkedIn
+    </a>
 
 </div>
 
@@ -99,10 +122,11 @@ let linkedinMessage = "";
 
 function updateMessage() {
 
-    const learningPath =
-        document.getElementById("learningPath").value;
+    const learningPath = document.getElementById("learningPath").value;
 
     if (!learningPath) {
+
+        linkedinMessage = "";
 
         document.getElementById("preview").innerHTML =
             "Select a Learning Path to generate your LinkedIn post.";
@@ -111,10 +135,11 @@ function updateMessage() {
     }
 
     linkedinMessage =
-        `🎉 I'm pleased to share that I have successfully completed the ${learningPath}. I continue to invest in developing my professional skills and knowledge.`;
+        "🎉 I'm pleased to share that I have successfully completed the " +
+        learningPath +
+        ". I continue to invest in developing my professional skills and knowledge.";
 
-    document.getElementById("preview").innerHTML =
-        linkedinMessage;
+    document.getElementById("preview").innerText = linkedinMessage;
 }
 
 function copyMessage() {
@@ -124,9 +149,13 @@ function copyMessage() {
         return;
     }
 
-    navigator.clipboard.writeText(linkedinMessage);
-
-    alert("LinkedIn message copied to clipboard!");
+    navigator.clipboard.writeText(linkedinMessage)
+        .then(() => {
+            alert("LinkedIn message copied to clipboard!");
+        })
+        .catch(() => {
+            alert("Unable to copy message.");
+        });
 }
 
 </script>
