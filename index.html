@@ -58,10 +58,11 @@
         Copy LinkedIn Message
     </button>
 
-    <a
-    /www.linkedin.com/feed/
-        Open LinkedIn
-    </a>
+    <a id="linkedinShare"
+   class="button"
+   target="_blank">
+   Share on LinkedIn
+</a>
 
 </div>
 
@@ -77,12 +78,19 @@ document.getElementById("curriculum").innerText =
     curriculum;
 
 const linkedinMessage =
-`🎉 I'm pleased to share that I have successfully completed the ${curriculum} Learning Path.`;
+`🎉 I'm pleased to share that I have successfully completed the ${curriculum} learning path.`;
 
 function copyMessage() {
     navigator.clipboard.writeText(linkedinMessage);
     alert("Message copied to clipboard!");
 }
+
+/* Create LinkedIn share URL */
+const pageUrl = window.location.href;
+
+document.getElementById("linkedinShare").href =
+    "https://www.linkedin.com/sharing/share-offsite/?url=" +
+    encodeURIComponent(pageUrl);
 
 </script>
 
